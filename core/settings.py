@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
-import environ
+from environ import Env, ImproperlyConfigured, environ
+
 
 env = environ.Env()
 environ.Env.read_env()
