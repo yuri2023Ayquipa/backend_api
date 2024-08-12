@@ -5,12 +5,13 @@ from rest_framework import permissions
 
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.authentication import TokenAuthentication
+from apps.User.authenticacion_mixins import Authentication
 
 from .models import Estado
 from .serializers import EstadoSerializer
 
 # Create your views here
-class EstadoView(APIView):
+class EstadoView(Authentication, APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EstadoSerializer
     queryset = Estado.objects.all()

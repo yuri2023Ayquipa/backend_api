@@ -4,13 +4,14 @@ from rest_framework import status, generics
 from rest_framework import permissions
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.authentication import TokenAuthentication
+from apps.User.authenticacion_mixins import Authentication
 
 from ..departamentos.models import Departamento
 from .serializers import DepartamentoDetailSerializer
 
 # Create your views here.
 
-class DepartamentoDetailView(APIView):
+class DepartamentoDetailView(Authentication, APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = [TokenAuthentication]
 

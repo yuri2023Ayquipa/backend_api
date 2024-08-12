@@ -6,13 +6,14 @@ from datetime import datetime
 from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.authentication import TokenAuthentication
+from apps.User.authenticacion_mixins import Authentication
 
-from .models import *
+from .models import Direccion, Estado
 from .serializers import DireccionSerializer, DireccionListSerializer
 
 # Create your views here.
 
-class DireccionView(APIView):
+class DireccionView(Authentication, APIView):
     serializer_class = DireccionListSerializer
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = [TokenAuthentication]
@@ -35,7 +36,7 @@ class DireccionView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-class DireccionDetalleView(APIView):
+class DireccionDetalleView(Authentication, APIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = DireccionSerializer
     serializer_classs = DireccionListSerializer

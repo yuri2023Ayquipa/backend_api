@@ -9,8 +9,8 @@ from django.contrib.sessions.models import Session
 
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import AllowAny
-from .serializers import UserTokenSerializer, loginSerializer
-from .models import Users, Estado
+from .serializers import loginSerializer
+from .models import Estado
 
 from django.shortcuts import get_object_or_404
 
@@ -48,7 +48,13 @@ class Login(ObtainAuthToken):
 class Logout(APIView):
     def get(self, request, *args, **kwargs):
         try:
-            token_key = request.GET.get('token')  # Obtener el token de los parámetros de la URL
+            # Obtener el token desde los headers
+            auth_header = request.headers.get('Authorization')
+            if auth_header and auth_header.startswith('Token '):
+                token_key = auth_header.split(' ')[1]
+            else:
+                return Response({'error': 'Token no proporcionado o inválido'}, status=status.HTTP_400_BAD_REQUEST)
+
             token = Token.objects.filter(key=token_key).first()
 
             if token:
@@ -69,6 +75,6 @@ class Logout(APIView):
 
                 return Response({'token_message': token_message, 'session_message': session_message}, status=status.HTTP_200_OK)
 
-            return Response({'error': 'No se ha encontrado un usuario'}, status=status.HTTP_400_BAD_REQUEST)   
-        except:
-            return Response({'error':'no se encontro el token'}, status=status.HTTP_409_CONFLICT)
+            return Response({'error': 'No se ha encontrado un usuario'}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_409_CONFLICT)

@@ -10,9 +10,11 @@ from rest_framework.authentication import TokenAuthentication
 
 from .models import Correo, Estado
 from .serializers import CorreoSerializers, CorreoPostSerializers
+from apps.User.authenticacion_mixins import Authentication
+
 
 # Create your views here.
-class CorreoView(APIView):
+class CorreoView(Authentication, APIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Correo.objects.all()
     authentication_classes = [TokenAuthentication]
@@ -36,7 +38,7 @@ class CorreoView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-class CorreoDetailView(APIView):
+class CorreoDetailView(Authentication, APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = CorreoPostSerializers
     serializer_classs = CorreoSerializers

@@ -6,11 +6,12 @@ from datetime import datetime
 from drf_yasg.utils import swagger_auto_schema
 from django.shortcuts import get_object_or_404
 from rest_framework.authentication import TokenAuthentication
+from apps.User.authenticacion_mixins import Authentication
 
 from .models import Persona, Estado
 from .serializers import PersonaSerializer
 
-class PersonaView(APIView):
+class PersonaView(Authentication, APIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Persona.objects.all()
     authentication_classes = [TokenAuthentication]
@@ -33,7 +34,7 @@ class PersonaView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class PersonaDetailView(APIView):
+class PersonaDetailView(Authentication, APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PersonaSerializer
     queryset = Persona.objects.all()

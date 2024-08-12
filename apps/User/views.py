@@ -4,26 +4,20 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework import permissions
 from datetime import datetime
+
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
-
-#from rest_framework.authtoken.models import Token
-#
-#from rest_framework.permissions import IsAuthenticated
-#from rest_framework.authentication import TokenAuthentication
-#from django.contrib.auth import authenticate
-
 from django.shortcuts import get_object_or_404
 
 from .models import Users, Estado
-from .serializers import UserSerializer #UserLoginSerializer
+from .serializers import UserSerializer 
+from apps.User.authenticacion_mixins import Authentication
 
 # Create your views here.
-
 estado_activo = get_object_or_404(Estado, pk=1)
 @method_decorator(csrf_exempt, name='dispatch')
-class UserView(APIView):
+class UserView(Authentication, APIView):
     queryset = Users.objects.all()
 
     def get(self, request):

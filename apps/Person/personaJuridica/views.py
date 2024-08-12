@@ -4,12 +4,13 @@ from rest_framework import status, generics
 from rest_framework import permissions
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.authentication import TokenAuthentication
+from apps.User.authenticacion_mixins import Authentication
 
 from .models import PersonaJuridica
 from .serializers import PersonaJuridicaSerializer
 
 # Create your views here.
-class PersonaJuridicaView(APIView):
+class PersonaJuridicaView(Authentication, APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PersonaJuridicaSerializer
     queryset = PersonaJuridica.objects.all()
@@ -31,7 +32,7 @@ class PersonaJuridicaView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class PersnaJuridicaDetailView(APIView):
+class PersnaJuridicaDetailView(Authentication, APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PersonaJuridicaSerializer
     queryset = PersonaJuridica.objects.all()

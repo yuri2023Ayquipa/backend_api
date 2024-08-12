@@ -4,6 +4,8 @@ from rest_framework import status, generics
 from rest_framework import permissions
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.authentication import TokenAuthentication
+from apps.User.authenticacion_mixins import Authentication
+
 
 
 from .models import Menu
@@ -11,7 +13,7 @@ from .serializers import MenuSerializer
 from core.utils import generic_detail_view
 
 # Create your views here.
-class MenuViews(APIView):
+class MenuViews(Authentication, APIView):
     permission_classes = [permissions.IsAuthenticated,]
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
@@ -62,7 +64,7 @@ class MenuViews(APIView):
         else:
             return Response({"status": "fail", "message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         
-class MenuDetail_views(APIView):
+class MenuDetail_views(Authentication, APIView):
     permission_classes = [permissions.AllowAny]
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer  # Corregido el error tipográfico

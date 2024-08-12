@@ -4,12 +4,12 @@ from rest_framework import status, generics
 from rest_framework import permissions
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.authentication import TokenAuthentication
-
+from apps.User.authenticacion_mixins import Authentication
 
 from .models import Nacionalidad
 from .serializers import NacionalidadSerializer
 
-class NacionalidadView(APIView):
+class NacionalidadView(Authentication, APIView):
     permission_classes = (permissions.IsAuthenticated,)    
     serializer_class = NacionalidadSerializer
     authentication_classes = [TokenAuthentication]
