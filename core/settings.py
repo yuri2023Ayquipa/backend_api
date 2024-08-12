@@ -75,7 +75,7 @@ SWAGGER_SETTINGS = {
     },
 }
 
-TOKEN_EXPIRED_AFTER_SECONDS = 60
+TOKEN_EXPIRED_AFTER_SECONDS = 3600
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
