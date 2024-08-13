@@ -1,32 +1,32 @@
 from django.urls import path
 
-from .estado.views import * 
+from .views.views_estado import EstadoView
 
-from .persona.person.views import PersonaView, PersonaDetailView
-from .persona.tipo_contribuyente.views import * 
-from .persona.tipo_documento.views import *
-from .personaJuridica.origen_entidad.views import *
-from .persona.nacionalidad.views import *
-from .persona.condicion_domiciliado.views import *
+from .views.views_person import PersonaView, PersonaDetailView
+from .views.views_tipo_contribuyente import TipoContribuyenteView 
+from .views.views_tipo_documento import TipoDocumentoView
+from .views.views_origen_entidad import OrigenEntidadView
+from .views.views_nacionalidad import NacionalidadView
+from .views.views_cond_domiciliaria import CondicionDomiciliadoView
 
-from .contacto.correo.views import CorreoView, CorreoDetailView
-from .contacto.operador.views import OperadorView
-from .contacto.Telefono.views import TelefonoView, TelefonoDetalleView
+from .views.views_correo import CorreoView, CorreoDetailView
+from .views.views_operador import OperadorView
+from .views.views_telefono import TelefonoView, TelefonoDetalleView
 
-from .Direccion.views import DireccionView, DireccionDetalleView
+from .views.views_direccion import DireccionView, DireccionDetalleView
 
-from .Region.departamentos.views import *
-from .Region.provincias.views import *
-from .Region.distritos.views import *
-from .Region.tipos_vias.views import *
-from .Region.tipos_zonas.views import *
+from .views.views_departamento import DepartamentoView
+from .views.views_provincia import ProvinciaView
+from .views.views_distrito import DistritoView
+from .views.views_tipo_via import TipoViaView
+from .views.views_tipo_zona import TipoZonaView
 
-from .personaJuridica.views import PersonaJuridicaView, PersnaJuridicaDetailView
+from .views.views_person_juridica import PersonaJuridicaView, PersnaJuridicaDetailView
 
 
 
-from .personaNatural.views import PersonaNaturalView, PersonaNaturalDetailView
-from .personaNatural.genero.views import GeneroView
+from .views.views_person_natural import PersonaNaturalView, PersonaNaturalDetailView
+from .views.views_genero import GeneroView
 
 urlpatterns = [
     path('estado/', EstadoView.as_view(), name='estado-list'),
@@ -38,11 +38,9 @@ urlpatterns = [
     path('telefono/<str:pk>', TelefonoDetalleView.as_view(), name='telefono-detail'),
 
     path('operador/', OperadorView.as_view(), name='operador-list'),
-    #path('operador/<str:pk>'),
 
     path('direccion/', DireccionView.as_view(), name='direccion-list'),
     path('direccion/<str:pk>', DireccionDetalleView.as_view(), name='direccion-detail'),
-
 
     path('persona/', PersonaView.as_view(), name='persona-list'),
     path('persona/<str:pk>', PersonaDetailView.as_view(), name='persona-detail'),
@@ -53,10 +51,9 @@ urlpatterns = [
     path('nacionalidad/', NacionalidadView.as_view(), name='nacionalidad-list'),
     path('condicion_domiciliado/', CondicionDomiciliadoView.as_view(), name='condicion-list'),
 
-
     path('departamento/', DepartamentoView.as_view(), name='departamento-list'),
-    path('provincia/<int:id_departamento>/', DepartamentoDetailView.as_view(), name='provincia-list'),
-    path('distrito/<int:id_provincia>/', ProvinciaDetailView.as_view(), name='distrito-list'),
+    path('provincia/<int:id_departamento>/', ProvinciaView.as_view(), name='provincia-list'),
+    path('distrito/<int:id_provincia>/', DistritoView.as_view(), name='distrito-list'),
     path('tipo_via/', TipoViaView.as_view(), name='tipo-via-list'),
     path('tipo_zona/', TipoZonaView.as_view(), name='tipo-zona-list'),
     

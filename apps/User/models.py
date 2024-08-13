@@ -2,9 +2,9 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-from apps.Person.persona.person.models import Persona
-from apps.Person.contacto.correo.models import Correo
-from apps.Person.estado.models import Estado
+from apps.Person.models.models_person import Persona
+from apps.Person.models.models_correo import Correo
+from apps.Person.models.models_estado import Estado
 
 # Create your models here.
 class UsuarioManager(BaseUserManager):

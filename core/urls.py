@@ -1,15 +1,12 @@
-from django.contrib import admin
+#from django.contrib import admin
 from django.urls import path, re_path, include
-from django.views.generic import TemplateView
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from django.conf import settings
 from django.conf.urls.static import static
-#from apps.User.views import ProtectedView
 from apps.User.login import Login, Logout
-#from rest_framework.authtoken import views
 from rest_framework.authentication import TokenAuthentication 
 
 
@@ -34,15 +31,13 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc-ui'),
 
-
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
     path('api/menu/', include('apps.menu.urls')),
     path('api/', include('apps.Person.urls')),
     path('api/user/', include('apps.User.urls')),
     #path('api/api-token-auth/', views.obtain_auth_token),
     path('api/login',Login.as_view(), name= 'login'),
     path('api/logout',Logout.as_view(), name= 'logout'),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
