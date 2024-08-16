@@ -8,6 +8,7 @@ from rest_framework.authentication import TokenAuthentication
 from apps.User.authenticacion_mixins import Authentication
 
 from ..models.models_person_natural import PersonaNatural
+from ..serializers.serializers_person import PersonaSerializer
 from ..serializers.serializers_person_natural import PersonaNaturalSerializer
 
 # Create your views here.
@@ -25,13 +26,14 @@ class PersonaNaturalView(Authentication, APIView):
         serializer = PersonaNaturalSerializer(persona_natural, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @swagger_auto_schema(operation_description="Create a new phone record", request_body=PersonaNaturalSerializer, responses={201: PersonaNaturalSerializer})
+    @swagger_auto_schema(operation_description="Create a new person record", request_body=PersonaNaturalSerializer, responses={201: PersonaNaturalSerializer})
     def post(self, request):
-        serializer = PersonaNaturalSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+       serializer = PersonaNaturalSerializer(data=request.data)
+       if serializer.is_valid():
+           serializer.save()
+           return Response(serializer.data, status=status.HTTP_201_CREATED)
+       return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+       
 
 class PersonaNaturalDetailView(Authentication, APIView):
     permission_classes = [permissions.IsAuthenticated]

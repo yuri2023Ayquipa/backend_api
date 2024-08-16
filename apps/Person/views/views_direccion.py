@@ -86,4 +86,4 @@ class DireccionDetalleView(Authentication, APIView):
         
         direccion.id_estado = estado_inactivo
         direccion.save()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)                                                                                                                                                                                                                                                                                                                                                                                                                                                  
