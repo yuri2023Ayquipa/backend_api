@@ -10,6 +10,7 @@ from apps.User.authenticacion_mixins import Authentication
 
 from ..models.models_person import Persona
 from ..models.models_estado import Estado
+
 from ..serializers.serializers_person import PersonaSerializer
 
 class PersonaView(Authentication, APIView):
