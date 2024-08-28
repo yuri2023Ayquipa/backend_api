@@ -11,7 +11,7 @@ from apps.User.authenticacion_mixins import Authentication
 from ..models.models_person import Persona
 from ..models.models_estado import Estado
 
-from ..serializers.serializers_person import PersonaSerializer
+from ..serializers.serializers_person import PersonaGetSerializer, PersonaSerializer
 
 class PersonaView(Authentication, APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -25,7 +25,7 @@ class PersonaView(Authentication, APIView):
     def get(self, request):
         estado_activo = get_object_or_404(Estado, pk=1)
         personas = Persona.objects.filter(id_estado=estado_activo)
-        serializer = PersonaSerializer(personas, many=True)
+        serializer = PersonaGetSerializer(personas, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     @swagger_auto_schema(operation_description="Create a new persona record", request_body=PersonaSerializer, responses={201: PersonaSerializer})
@@ -55,8 +55,8 @@ class PersonaDetailView(Authentication, APIView):
     def get(self, request, pk):
         persona = self.get_persona(pk=pk)
         if persona is None:
-            return Response({"status": "fail", "message": f"Persona wirh Id: {pk} not found"},status=status.HTTP_404_NOT_FOUND)
-        serializer = self.serializer_class(persona)
+            return Response({"status": "fail", "message": f"Persona with Id: {pk} not found"},status=status.HTTP_404_NOT_FOUND)
+        serializer = PersonaGetSerializer(persona)
         return Response({"status": "succes", "data": {"persona": serializer.data}}, status=status.HTTP_200_OK)
     
     @swagger_auto_schema(request_body=PersonaSerializer, responses={200: PersonaSerializer})

@@ -23,7 +23,8 @@ class PersonaNaturalView(Authentication, APIView):
         security=[{'Token': []}]
     )
     def get(self, request):
-        persona_natural = PersonaNatural.objects.all()
+        estado_inactivo = get_object_or_404(Estado, pk=1)
+        persona_natural = PersonaNatural.objects.filter(id_estado=estado_inactivo)
         serializer = PersonaNaturalGetSerializer(persona_natural, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

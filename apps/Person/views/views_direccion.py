@@ -10,12 +10,12 @@ from apps.User.authenticacion_mixins import Authentication
 
 from ..models.models_direccion import Direccion
 from ..models.models_estado import Estado
-from ..serializers.serializers_direccion import DireccionSerializer, DireccionListSerializer
+from ..serializers.serializers_direccion import DireccionGetSerializer, DireccionPostSerializer
 
 # Create your views here.
 
 class DireccionView(Authentication, APIView):
-    serializer_class = DireccionListSerializer
+    serializer_class = DireccionGetSerializer
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = [TokenAuthentication]
 
@@ -25,12 +25,12 @@ class DireccionView(Authentication, APIView):
     def get(self, request):
         estado_inactivo = get_object_or_404(Estado, pk=1)
         direcciones = Direccion.objects.filter(id_estado=estado_inactivo)
-        serializer = DireccionListSerializer(direcciones, many=True)
+        serializer = DireccionGetSerializer(direcciones, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-    @swagger_auto_schema(operation_description="Create a new phone record", request_body=DireccionSerializer, responses={201: DireccionSerializer})
+    @swagger_auto_schema(operation_description="Create a new person record", request_body=DireccionPostSerializer, responses={201: DireccionPostSerializer})
     def post(self, request):
-        serializer = DireccionSerializer(data=request.data)
+        serializer = DireccionPostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -39,8 +39,8 @@ class DireccionView(Authentication, APIView):
 
 class DireccionDetalleView(Authentication, APIView):
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = DireccionSerializer
-    serializer_classs = DireccionListSerializer
+    serializer_class = DireccionPostSerializer
+    serializer_classs = DireccionGetSerializer
     queryset = Direccion.objects.all()
     authentication_classes = [TokenAuthentication]
 
@@ -63,7 +63,7 @@ class DireccionDetalleView(Authentication, APIView):
         return Response({"status": "success", "data": {"direccion": serializer.data}}, status=status.HTTP_200_OK)
 
 
-    @swagger_auto_schema(request_body=DireccionSerializer, responses={200: DireccionSerializer})
+    @swagger_auto_schema(request_body=DireccionPostSerializer, responses={200: DireccionPostSerializer})
     def patch(self, request, pk):
         direccion = self.get_direccion(pk)
         if direccion == None:

@@ -7,6 +7,7 @@ class TipoDocumento(models.Model):
     
     id_sunat = models.CharField(max_length=10, unique=False, blank=False, null=False)
     denominacion = models.CharField(max_length=50, unique=False, blank=False, null=False)
+    abreviatura = models.CharField(max_length=5, null=False)
     
     def __str__(self):
         return self.denominacion

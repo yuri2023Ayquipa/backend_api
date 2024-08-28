@@ -42,6 +42,10 @@ PROJECT_APPS = [
     'apps.menu',
     'apps.Person',
     'apps.User',
+    'apps.GanadoPro',
+    'apps.AlimentoPro',
+    'apps.ControlPeso',
+    'apps.ControlAlimentacion',
 
 ]
 

@@ -23,6 +23,7 @@ class PersonaNaturalGetSerializer(serializers.ModelSerializer):
             'fecha_nacimiento': instance.fecha_nacimiento.strftime('%Y-%m-%d'),
             'id_genero': instance.id_genero.abreviatura
         }
+    
 class PersonaNaturalPostSerializer(serializers.ModelSerializer):
     id_persona = PersonaSerializer()
     id_genero = serializers.PrimaryKeyRelatedField(queryset=Genero.objects.all())
