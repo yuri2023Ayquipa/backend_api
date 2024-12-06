@@ -39,7 +39,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-    'apps.menu',
+    'apps.Menu',
     'apps.Person',
     'apps.User',
     'apps.GanadoPro',

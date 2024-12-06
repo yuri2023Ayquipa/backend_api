@@ -1,7 +1,5 @@
 from django.db import models
 
-
-
 # Create your models here.
 class CompraAlimento(models.Model):
     class Meta:
@@ -13,5 +11,3 @@ class CompraAlimento(models.Model):
     total_peso = models.DecimalField(max_digits=12, decimal_places=2, null=False)
     costo_total = models.DecimalField(max_digits=10,decimal_places=2)
     precio_kilo = models.DecimalField(max_digits=30, decimal_places=20)
-
-    
